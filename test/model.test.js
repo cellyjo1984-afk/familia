@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {occurs,taskDone,seed} from '../public/model.js';
+test('eventos semanais respeitam início e dia da semana',()=>{const e={date:'2026-10-26',repeat:'weekly'};assert.equal(occurs(e,'2026-11-02'),true);assert.equal(occurs(e,'2026-10-19'),false);assert.equal(occurs(e,'2026-10-27'),false);});
+test('eventos mensais não transbordam meses curtos',()=>{const e={date:'2026-01-31',repeat:'monthly'};assert.equal(occurs(e,'2026-02-28'),false);assert.equal(occurs(e,'2026-03-31'),true);});
+test('evento único só ocorre na data marcada',()=>{assert.equal(occurs({date:'2026-10-26',repeat:'none'},'2026-10-27'),false);});
+test('rotina diária renova no dia seguinte e mantém histórico',()=>{const t={repeat:'daily',history:['2026-10-26']};assert.equal(taskDone(t,'2026-10-26'),true);assert.equal(taskDone(t,'2026-10-27'),false);assert.equal(t.history.length,1);});
+test('rotina semanal renova à segunda-feira',()=>{const t={repeat:'weekly',history:['2026-10-25']};assert.equal(taskDone(t,'2026-10-25'),true);assert.equal(taskDone(t,'2026-10-26'),false);});
+test('tarefa ocasional fica concluída nos dias seguintes',()=>{assert.equal(taskDone({repeat:'once',history:['2026-10-25']},'2026-11-01'),true);});
+test('dados de exemplo podem ser guardados e restaurados',()=>{let s=seed();assert.deepEqual(JSON.parse(JSON.stringify(s)),s);assert.equal(s.tasks.length,4);assert.equal(s.version,1);});
