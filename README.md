@@ -40,3 +40,7 @@ A interface foi exercitada automaticamente em Chromium, incluindo CRUD de evento
 ## Segunda fase
 
 Veja [FASE-2.md](FASE-2.md). Esta fase está planeada e ainda não foi implementada. Não publique dados familiares reais antes de implementar e testar os controlos de acesso.
+
+## Tipografia
+
+A fonte arredondada Nunito está incluída localmente em `public/fonts`, sob a licença SIL Open Font License (ver `public/fonts/OFL.txt`). Não faz pedidos a serviços de fontes externos.
