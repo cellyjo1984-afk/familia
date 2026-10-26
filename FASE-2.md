@@ -25,3 +25,12 @@ Manter a interface e separar o acesso aos dados num módulo com a mesma API para
 - Restaurar um backup funciona; testar telemóvel/tablet, teclado e leitor de ecrã e confirmar acessibilidade e tamanhos táteis.
 
 Até estes critérios passarem, continuar apenas com dados de exemplo e acesso local.
+
+## TV privada e vários dispositivos
+
+- Cada dispositivo inicia sessão; o modo de apresentação é escolhido pelo URL (`?mode=tablet` ou `?mode=tv`) e nunca guardado como preferência partilhada da família.
+- Criar uma função `display` de leitura para a TV. Aplicar a restrição nas políticas RLS, não apenas escondendo botões. A TV pode ler a agenda, tarefas e avisos da sua família, mas não escrever ou gerir convites. A implementação atual não oferece essa autorização.
+- Na Smart TV, confirmar compatibilidade do navegador com autenticação e PWA; se necessário, usar um computador por HDMI. Evitar credenciais em URLs e não usar um token permanente embutido no código para contornar o login.
+- Realtime deve subscrever apenas dados permitidos ao membro. Refazer uma consulta autenticada ao recuperar ligação para preencher alterações perdidas; desfazer subscrições ao sair. Fornecer versão/controlo de concorrência, erros visíveis e estado de ligação.
+- Testar tablet, telemóvel e TV com sessões distintas, incluindo perda/recuperação de rede, renovação e revogação de sessão, fuso horário familiar, mudança de dia e reinício da aplicação instalada.
+- A demonstração atual instala apenas a interface local via service worker. Antes de ativar contas, isolar o armazenamento por sessão e garantir que sair impede acesso offline a dados privados anteriormente vistos.
